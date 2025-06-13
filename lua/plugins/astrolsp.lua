@@ -5,6 +5,8 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local ag_project_library_path = "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -44,16 +46,53 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      -- angularls = {
+      --   cmd = {
+      --       "ngserver",
+      --       "--stdio",
+      --       "--tsProbeLocations",
+      --       ag_project_library_path,
+      --       "--ngProbeLocations",
+      --       ag_project_library_path,
+      --   },
+      --   on_new_config = function(new_config, new_root_dir)
+      --     -- We need to check our probe directories because they may have changed.
+      --     new_config.cmd = {
+      --       vim.fn.exepath "ngserver",
+      --       "--stdio",
+      --       "--tsProbeLocations",
+      --       ag_project_library_path,
+      --       "--ngProbeLocations",
+      --       ag_project_library_path,
+      --     }
+      --   end,
+      -- },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached
+    -- handlers = {
+    --   -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
+    --   -- function(server, opts) require("lspconfig")[server].setup(opts) end
+    --
+    --   -- the key is the server that is being setup with `lspconfig`
+    --   -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
+    --   -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+    -- },
     handlers = {
-      -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-      -- function(server, opts) require("lspconfig")[server].setup(opts) end
-
-      -- the key is the server that is being setup with `lspconfig`
-      -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-      -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+      function(server, opts)
+        print(server)
+        if vim.g.list_of_lsp_server then
+          for i, v in ipairs(vim.g.list_of_lsp_server) do
+            if v == server then
+              print(true)
+              print(opts)
+              require("lspconfig")[server].setup(opts)
+            end
+          end
+        else
+          require("lspconfig")[server].setup(opts)
+        end
+      end,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {

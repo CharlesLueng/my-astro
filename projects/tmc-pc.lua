@@ -1,0 +1,1 @@
+-- vim.g.list_of_lsp_server = {"lua_ls", "volar", "cssls", "jsonls", "emmet_ls", "html", "cssls", "ts_ls"}

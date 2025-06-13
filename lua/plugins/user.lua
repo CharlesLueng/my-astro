@@ -6,6 +6,80 @@
 
 ---@type LazySpec
 return {
+  -- {
+  --   "AstroNvim/astrolsp",
+  --   dependencies = {
+  --     { "windwp/nvim-projectconfig", opts = {} },
+  --   },
+  --   ---@param opts AstroLSPOpts
+  --   opts = function(_, opts)
+  --     local astrocore = require "astrocore"
+  --
+  --     -- print(vim.g.list_of_lsp_server)
+  --     -- print(table.concat(vim.g.list_of_lsp_server, ","))
+  --     -- if vim.g.list_of_lsp_server then
+  --     --   opts.servers = vim.g.list_of_lsp_server
+  --     -- else
+  --     --   opts.servers = opts.servers or {}
+  --     -- end
+  --
+  --     local project_library_path = "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
+  --     -- local cmd = {
+  --     --   "ngserver",
+  --     --   "--stdio",
+  --     --   "--tsProbeLocations",
+  --     --   project_library_path,
+  --     --   "--ngProbeLocations",
+  --     --   project_library_path,
+  --     -- }
+  --     --
+  --     -- vim.lsp.config("angularls", {
+  --     --   cmd = cmd,
+  --     -- })
+  --
+  --     return astrocore.extend_tbl(opts, {
+  --       config = {
+  --         angularls = {
+  --           on_new_config = function(new_config, new_root_dir)
+  --             -- We need to check our probe directories because they may have changed.
+  --             new_config.cmd = {
+  --               vim.fn.exepath "ngserver",
+  --               "--stdio",
+  --               "--tsProbeLocations",
+  --               project_library_path,
+  --               "--ngProbeLocations",
+  --               project_library_path,
+  --             }
+  --           end,
+  --           cmd = { "ngserver" },
+  --           default_config = {
+  --             cmd = {
+  --               "ngserver",
+  --               -- "--stdio",
+  --               -- "--tsProbeLocations",
+  --               -- project_library_path,
+  --               -- "--ngProbeLocations",
+  --               -- project_library_path,
+  --               -- "--angularCoreVersion",
+  --               -- default_angular_core_version,
+  --             },
+  --           },
+  --           -- init_options = {
+  --           --   plugins = {
+  --           --     {
+  --           --       name = "@vue/typescript-plugin",
+  --           --       location = vue_language_server_path,
+  --           --       languages = { "vue" },
+  --           --     },
+  --           --   },
+  --           -- },
+  --           -- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+  --         },
+  --       },
+  --     })
+  --   end,
+  --   config = function(_, opts) require("nvim-projectconfig").setup() end,
+  -- },
 
   -- == Examples of Adding Plugins ==
   -- "AstroNvim/astrolsp",

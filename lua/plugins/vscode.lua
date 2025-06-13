@@ -54,6 +54,11 @@ return {
 
       local maps = assert(opts.mappings)
 
+      -- fold
+      maps.n["zz"] = function() require("vscode").action "editor.toggleFold" end
+      maps.n["zr"] = function() require("vscode").action "editor.foldAll" end
+      maps.n["zo"] = function() require("vscode").action "editor.unfoldAll" end
+
       -- basic actions
       maps.n["<Leader>q"] = function() require("vscode").action "workbench.action.closeWindow" end
       maps.n["<Leader>w"] = function() require("vscode").action "workbench.action.files.save" end
@@ -70,6 +75,7 @@ return {
       -- terminal
       -- maps.n["<F7>"] = function() require("vscode").action "workbench.action.terminal.toggleTerminal" end
       maps.n["<C-'>"] = function() require("vscode").action "workbench.action.terminal.toggleTerminal" end
+      maps.n["<C-/>"] = function() require("vscode").action "workbench.action.terminal.toggleTerminal" end
 
       -- buffer management
       maps.n["]b"] = "<Cmd>Tabnext<CR>"
@@ -100,8 +106,18 @@ return {
       maps.n["<Leader>fo"] = function() require("vscode").action "workbench.action.openRecent" end
       maps.n["<Leader>ft"] = function() require("vscode").action "workbench.action.selectTheme" end
       maps.n["<Leader>fw"] = function() require("vscode").action "workbench.action.findInFiles" end
-      maps.n["<Leader>fp"] = function ()
-        require("vscode").action "projectManager.listProjects"
+      maps.n["<Leader>fp"] = function() require("vscode").action "projectManager.listProjects" end
+      maps.n["<leader>fb"] = function()
+        require("vscode").action("workbench.action.quickOpen", {
+          args = {
+            "edt ",
+          },
+        })
+      end
+
+      -- zen mode
+      maps.n["<leader>zz"] = function ()
+        require("vscode").action("workbench.action.toggleZenMode")
       end
 
       -- git client
@@ -122,42 +138,18 @@ return {
       maps.n["<Leader>lf"] = function() require("vscode").action "editor.action.formatDocument" end
 
       -- harpoon for vscode
-      maps.n["<Leader>ha"] = function ()
-        require("vscode").action "vscode-harpoon.addEditor"
-      end
-      maps.n["<Leader>he"] = function ()
-        require("vscode").action "vscode-harpoon.editEditors"
-      end
-      maps.n["<Leader>hp"] = function ()
-        require("vscode").action "vscode-harpoon.editorQuickPick"
-      end
-      maps.n["<Leader>h1"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor1"
-      end
-      maps.n["<Leader>h2"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor2"
-      end
-      maps.n["<Leader>h3"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor3"
-      end
-      maps.n["<Leader>h4"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor4"
-      end
-      maps.n["<Leader>h5"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor5"
-      end
-      maps.n["<Leader>h6"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor6"
-      end
-      maps.n["<Leader>h7"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor7"
-      end
-      maps.n["<Leader>h8"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor8"
-      end
-      maps.n["<Leader>h9"] = function ()
-        require("vscode").action "vscode-harpoon.gotoEditor9"
-      end
+      maps.n["<Leader>ha"] = function() require("vscode").action "vscode-harpoon.addEditor" end
+      maps.n["<Leader>he"] = function() require("vscode").action "vscode-harpoon.editEditors" end
+      maps.n["<Leader>hp"] = function() require("vscode").action "vscode-harpoon.editorQuickPick" end
+      maps.n["<Leader>h1"] = function() require("vscode").action "vscode-harpoon.gotoEditor1" end
+      maps.n["<Leader>h2"] = function() require("vscode").action "vscode-harpoon.gotoEditor2" end
+      maps.n["<Leader>h3"] = function() require("vscode").action "vscode-harpoon.gotoEditor3" end
+      maps.n["<Leader>h4"] = function() require("vscode").action "vscode-harpoon.gotoEditor4" end
+      maps.n["<Leader>h5"] = function() require("vscode").action "vscode-harpoon.gotoEditor5" end
+      maps.n["<Leader>h6"] = function() require("vscode").action "vscode-harpoon.gotoEditor6" end
+      maps.n["<Leader>h7"] = function() require("vscode").action "vscode-harpoon.gotoEditor7" end
+      maps.n["<Leader>h8"] = function() require("vscode").action "vscode-harpoon.gotoEditor8" end
+      maps.n["<Leader>h9"] = function() require("vscode").action "vscode-harpoon.gotoEditor9" end
     end,
   },
   -- disable treesitter highlighting

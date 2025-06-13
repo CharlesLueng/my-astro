@@ -13,6 +13,7 @@ return {
   { import = "astrocommunity.pack.cs" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.json" },
+  { import = "astrocommunity.pack.angular" },
   -- { import = "astrocommunity.colorscheme.tokyodark-nvim" },
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
   { import = "astrocommunity.colorscheme.dracula-nvim"},
@@ -30,6 +31,6 @@ return {
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
-  { import = 'astrocommunity.pack.dart'}
+  { import = 'astrocommunity.pack.dart'},
   -- import/override with your plugins folder
 }
