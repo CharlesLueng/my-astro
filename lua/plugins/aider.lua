@@ -1,5 +1,7 @@
+local prefix = "<Leader>a"
+
 return {
-  "paul-gauthier/aider.nvim",
+  "joshuavial/aider.nvim",
   event = "VeryLazy",  -- 推荐延迟加载
   opts = {
     -- 这里可以添加插件的默认配置
