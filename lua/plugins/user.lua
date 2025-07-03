@@ -13,7 +13,34 @@ return {
   --   },
   --   ---@param opts AstroLSPOpts
   --   opts = function(_, opts)
-  --     local astrocore = require "astrocore"
+  --     -- local astrocore = require "astrocore"
+  --
+  --     local root_dir = vim.fn.getcwd()
+  --     local node_modules_dir = vim.fs.find('node_modules', { path = root_dir, upward = true })[1]
+  --     local project_root = node_modules_dir and vim.fs.dirname(node_modules_dir) or '?'
+  --
+  --     local function get_angular_core_version()
+  --       if not project_root then
+  --         return ''
+  --       end
+  --
+  --       local package_json = project_root .. '/package.json'
+  --       if not vim.uv.fs_stat(package_json) then
+  --         return ''
+  --       end
+  --
+  --       local contents = io.open(package_json):read '*a'
+  --       local json = vim.json.decode(contents)
+  --       if not json.dependencies then
+  --         return ''
+  --       end
+  --
+  --       local angular_core_version = json.dependencies['@angular/core']
+  --
+  --       angular_core_version = angular_core_version and angular_core_version:match('%d+%.%d+%.%d+')
+  --
+  --       return angular_core_version
+  --     end
   --
   --     -- print(vim.g.list_of_lsp_server)
   --     -- print(table.concat(vim.g.list_of_lsp_server, ","))
@@ -23,7 +50,7 @@ return {
   --     --   opts.servers = opts.servers or {}
   --     -- end
   --
-  --     local project_library_path = "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
+  --     local project_library_path = "/home/charles/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
   --     -- local cmd = {
   --     --   "ngserver",
   --     --   "--stdio",
@@ -36,47 +63,47 @@ return {
   --     -- vim.lsp.config("angularls", {
   --     --   cmd = cmd,
   --     -- })
-  --
-  --     return astrocore.extend_tbl(opts, {
-  --       config = {
-  --         angularls = {
-  --           on_new_config = function(new_config, new_root_dir)
-  --             -- We need to check our probe directories because they may have changed.
-  --             new_config.cmd = {
-  --               vim.fn.exepath "ngserver",
+  --     -- print(opts.config.angularls)
+  --     local cmd = {
+  --               "ngserver",
   --               "--stdio",
   --               "--tsProbeLocations",
   --               project_library_path,
   --               "--ngProbeLocations",
-  --               project_library_path,
+  --               project_library_path.."@angular/language-server/node_modules/",
+  --               "--angularCoreVersion",
+  --               get_angular_core_version(),
   --             }
-  --           end,
-  --           cmd = { "ngserver" },
-  --           default_config = {
-  --             cmd = {
-  --               "ngserver",
-  --               -- "--stdio",
-  --               -- "--tsProbeLocations",
-  --               -- project_library_path,
-  --               -- "--ngProbeLocations",
-  --               -- project_library_path,
-  --               -- "--angularCoreVersion",
-  --               -- default_angular_core_version,
-  --             },
-  --           },
-  --           -- init_options = {
-  --           --   plugins = {
-  --           --     {
-  --           --       name = "@vue/typescript-plugin",
-  --           --       location = vue_language_server_path,
-  --           --       languages = { "vue" },
-  --           --     },
-  --           --   },
-  --           -- },
-  --           -- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+  --
+  --     -- vim.lsp.config('angularls', {
+  --     --   cmd = cmd,
+  --     -- })
+  --
+  --     opts.config = require("astrocore").extend_tbl(opts.config or {}, {
+  --         angularls = {
+  --           cmd = cmd,
   --         },
-  --       },
   --     })
+  --
+  --     opts.handlers = {
+  --       function(server, opts)
+  --       print(server)
+  --       if server == "angularls" then
+  --         print(table.concat(opts.cmd, ' '))
+  --         print(opts.cmd)
+  --       end
+  --       if vim.g.list_of_lsp_server then
+  --         for i, v in ipairs(vim.g.list_of_lsp_server) do
+  --           if v == server then
+  --             require("lspconfig")[server].setup(opts)
+  --           end
+  --         end
+  --       else
+  --         require("lspconfig")[server].setup(opts)
+  --       end
+  --     end
+  --     }
+  --     -- print(opts.config.angularls)
   --   end,
   --   config = function(_, opts) require("nvim-projectconfig").setup() end,
   -- },

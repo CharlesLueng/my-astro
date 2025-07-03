@@ -1,4 +1,5 @@
-vim.g.list_of_lsp_server = {"lua_ls", "angularls", "cssls", "jsonls", "emmet_ls", "html", "cssls", "ts_ls"}
+-- vim.g.list_of_lsp_server = {"lua_ls", "angularls",  "jsonls", "emmet_ls", "html", "cssls", "vtsls"}
+vim.g.list_of_lsp_server = {"lua_ls", "angularls",  "jsonls", "emmet_ls", "html", "cssls", "vtsls"}
 -- vim.g.list_of_lsp_server = {"lua_ls", "angularls"}
 
 -- omnisharp

@@ -13,7 +13,7 @@ return {
   { import = "astrocommunity.pack.cs" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.json" },
-  { import = "astrocommunity.pack.angular" },
+  -- { import = "astrocommunity.pack.angular" },
   -- { import = "astrocommunity.colorscheme.tokyodark-nvim" },
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
   { import = "astrocommunity.colorscheme.dracula-nvim"},
@@ -21,7 +21,7 @@ return {
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.motion.mini-surround" },
   -- { import = "astrocommunity.recipes.vscode" },
-  { import = "astrocommunity.completion.avante-nvim" },
+  -- { import = "astrocommunity.completion.avante-nvim" },
   { import = "astrocommunity.docker.lazydocker" },
   -- { import = "astrocommunity.workflow.hardtime-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
@@ -33,4 +33,6 @@ return {
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = 'astrocommunity.pack.dart'},
   -- import/override with your plugins folder
+  -- Lsp Picker Mappings
+  { import = "astrocommunity.recipes.picker-lsp-mappings" }
 }

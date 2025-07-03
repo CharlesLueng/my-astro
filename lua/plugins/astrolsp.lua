@@ -5,8 +5,6 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
-local ag_project_library_path = "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
-
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -47,26 +45,115 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- angularls = {
-      --   cmd = {
-      --       "ngserver",
-      --       "--stdio",
-      --       "--tsProbeLocations",
-      --       ag_project_library_path,
-      --       "--ngProbeLocations",
-      --       ag_project_library_path,
-      --   },
+      --   -- cmd = {
+      --   --   "ngserver",
+      --   --   "--stdio",
+      --   --   "--tsProbeLocations",
+      --   --   ag_project_library_path,
+      --   --   "--ngProbeLocations",
+      --   --   ag_project_library_path .. "@angular/language-server/node_modules/",
+      --   --   "--angularCoreVersion",
+      --   --   get_angular_core_version(),
+      --   -- },
       --   on_new_config = function(new_config, new_root_dir)
+      --     local ag_project_library_path =
+      --       "/home/charles/.local/share/nvim/mason/packages/angular-language-server/node_modules/"
+      --
+      --     local root_dir = vim.fn.getcwd()
+      --     local node_modules_dir = vim.fs.find("node_modules", { path = root_dir, upward = true })[1]
+      --     local project_root = node_modules_dir and vim.fs.dirname(node_modules_dir) or "?"
+      --
+      --     local function get_angular_core_version()
+      --       if not project_root then return "" end
+      --
+      --       local package_json = project_root .. "/package.json"
+      --       if not vim.uv.fs_stat(package_json) then return "" end
+      --
+      --       local contents = io.open(package_json):read "*a"
+      --       local json = vim.json.decode(contents)
+      --       if not json.dependencies then return "" end
+      --
+      --       local angular_core_version = json.dependencies["@angular/core"]
+      --
+      --       angular_core_version = angular_core_version and angular_core_version:match "%d+%.%d+%.%d+"
+      --
+      --       return angular_core_version
+      --     end
       --     -- We need to check our probe directories because they may have changed.
       --     new_config.cmd = {
       --       vim.fn.exepath "ngserver",
       --       "--stdio",
       --       "--tsProbeLocations",
       --       ag_project_library_path,
+      --       -- "--tsdk",
+      --       -- "/home/charles/.local/share/nvim/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib/",
       --       "--ngProbeLocations",
-      --       ag_project_library_path,
+      --       ag_project_library_path .. "@angular/language-server/node_modules/",
+      --       -- log
+      --       "--logFile",
+      --       "/home/charles/Downloads/ag_log.log",
+      --       "--logVerbosity",
+      --       "on",
+      --       "--angularCoreVersion",
+      --       get_angular_core_version(),
       --     }
+      --     -- new_config.options = {
+      --     --   typescript = {
+      --     --     -- replace with your global TypeScript library path
+      --     --     tsdk = "/home/charles/.local/share/nvim/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib/",
+      --     --   },
+      --     -- }
+      --     -- new_config.typescript = {
+      --     --   tsdk = "/home/charles/.local/share/nvim/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib/",
+      --     -- }
+      --     new_config.filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx", "htmlangular" }
+      --     new_config.root_markers = { "angular.json", "nx.json" }
       --   end,
       -- },
+      ---@vtsls lspconfig.options.vtsls
+      vtsls = {
+        -- init_options = {
+        --   typescript = {
+        --     tsdk = "/home/charles/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib",
+        --     globalTsdk = "/home/charles/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
+        --   }
+        -- },
+        -- before_init = function(params, config)
+        --   if config.init_options.typescript == nil then config.init_options.typescript = {} end
+        --
+        --   -- config.init_options.typescript.globalTsdk =
+        --   --   "/home/charles/.local/share/nvim/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib"
+        --   -- config.init_options.typescript.tsdk =
+        --   --   "/home/charles/.local/share/nvim/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib"
+        --   -- config.init_options.typescript.tsdk =
+        --   --   "/home/charles/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
+        -- end,
+        -- on_new_config = function (new_config, new_root_dir)
+        --   if new_config.typescript. then
+        --
+        --   end
+        --   -- new_config.typescript.globalTsdk = "/home/charles/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
+        --   -- new_config.typescript.tsdk = "/home/charles/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
+        -- end
+        -- before_init = function(_, config)
+        --   local astrocore = require "astrocore"
+        --   local registry_ok, registry = pcall(require, "mason-registry")
+        --   if not registry_ok then return end
+        --
+        --   if registry.is_installed "vue-language-server" then
+        --     local vue_plugin_config = {
+        --       name = "@vue/typescript-plugin",
+        --       location = vim.fn.expand "$MASON/packages/vue-language-server/node_modules/@vue/language-server",
+        --       languages = { "vue" },
+        --       configNamespace = "typescript",
+        --       enableForWorkspaceTypeScriptVersions = false,
+        --     }
+        --
+        --     astrocore.list_insert_unique(config.settings.vtsls.tsserver.globalPlugins, { vue_plugin_config })
+        --   end
+        -- end,
+      },
+
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached
@@ -79,20 +166,19 @@ return {
     --   -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     -- },
     handlers = {
-      function(server, opts)
-        print(server)
-        if vim.g.list_of_lsp_server then
-          for i, v in ipairs(vim.g.list_of_lsp_server) do
-            if v == server then
-              print(true)
-              print(opts)
-              require("lspconfig")[server].setup(opts)
-            end
-          end
-        else
-          require("lspconfig")[server].setup(opts)
-        end
-      end,
+      -- function(server, opts)
+      --   if vim.g.list_of_lsp_server then
+      --     for i, v in ipairs(vim.g.list_of_lsp_server) do
+      --       if v == server then require("lspconfig")[server].setup(opts) end
+      --     end
+      --   else
+      --     require("lspconfig")[server].setup(opts)
+      --   end
+      -- end,
+      -- csharp_ls = function(server, opts)
+      --   require("lspconfig")[server].setup(opts)
+      --   require("csharpls_extended").buf_read_cmd_bind()
+      -- end,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
