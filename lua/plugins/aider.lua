@@ -4,8 +4,13 @@ return {
   "joshuavial/aider.nvim",
   event = "VeryLazy",  -- 推荐延迟加载
   opts = {
-    -- 这里可以添加插件的默认配置
-    -- 例如:
+    -- 窗口配置
+    window = {
+      width = 0.6,  -- 窗口宽度占屏幕比例 (0.0-1.0)
+      min_width = 60,  -- 最小宽度（像素）
+      max_width = 120,  -- 最大宽度（像素）
+    },
+    -- 其他配置示例:
     -- openai_api_key = "your-api-key", -- 建议通过环境变量设置
     -- model = "gpt-4",                -- 默认模型
   },
