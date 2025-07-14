@@ -27,7 +27,6 @@ return {
       "AstroNvim/astrolsp",
       opts = function(_, opts)
         table.insert(opts.handlers, 1, function(server, opts)
-          print "server"
           if vim.g.list_of_lsp_server then
             for i, v in ipairs(vim.g.list_of_lsp_server) do
               if v == server then require("lspconfig")[server].setup(opts) end
