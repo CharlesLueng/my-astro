@@ -29,10 +29,25 @@ return {
         table.insert(opts.handlers, 1, function(server, opts)
           if vim.g.list_of_lsp_server then
             for i, v in ipairs(vim.g.list_of_lsp_server) do
-              if v == server then require("lspconfig")[server].setup(opts) end
+              -- 注册服务
+              if v == server then
+                -- 判断需要注册的lsp服务为vtsls
+                if server == "vtsls" then
+                  -- 判断配置的lsp服务是否存在vuels,是的则移除typescript-lsp对vue(filetypes)文件支持
+                  if vim.tbl_contains(vim.g.list_of_lsp_server, "vuels") then
+                    if vim.tbl_contains(opts.filetypes, "vue") then
+                      -- 找到并移除
+                      for i = #opts.filetypes, 1, -1 do
+                        if opts.filetypes[i] == "vue" then table.remove(opts.filetypes, i) end
+                      end
+                    end
+                  end
+                end
+                require("lspconfig")[server].setup(opts)
+              end
             end
           else
-            require("lspconfig")[server].setup(opts)
+            if server ~= "vuels" then require("lspconfig")[server].setup(opts) end
           end
         end)
         return opts
