@@ -361,4 +361,29 @@ return {
       end,
     },
   },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    optional = true,
+    enabled = true,
+  },
+  {
+    "numToStr/Comment.nvim",
+    optional = true,
+    enabled = true,
+  },
+  {
+    "olimorris/onedarkpro.nvim",
+    opts = {
+      options = {
+        highlight_inactive_windows = true,
+      },
+      colors = {
+        -- yellow = "#FFF000",
+        line_num_color = "#7f848e",
+      },
+      highlights = {
+        LineNr = { fg = "${line_num_color}" }, -- Make command line text darker
+      },
+    },
+  },
 }

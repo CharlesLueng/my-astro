@@ -42,7 +42,6 @@ return {
       -- your configuration comes here; leave empty for default settings
     },
     config = function(_, opts)
-      
       require("roslyn").setup(opts)
 
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -160,8 +159,8 @@ return {
     optional = true,
     opts = function(_, opts)
       vim.lsp.config("roslyn", {
-        on_attach = function(client, bufnr) 
-          -- print "This will run when the server attaches!" 
+        on_attach = function(client, bufnr)
+          -- print "This will run when the server attaches!"
           require("astrolsp").on_attach(client, bufnr)
         end,
         settings = {

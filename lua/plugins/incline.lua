@@ -3,6 +3,15 @@ return {
   -- lazy = true,
   event = "BufRead",
   opts = {
+    window = {
+      margin = {
+        horizontal = 0,
+        vertical = 0
+      },
+      overlap = {
+        winbar = true
+      }
+    },
     render = function(props)
       local devicons = require "nvim-web-devicons"
       local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
