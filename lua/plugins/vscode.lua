@@ -53,6 +53,11 @@ return {
       if opt then opt.cmdheight = nil end
 
       local maps = assert(opts.mappings)
+      
+      -- yazi
+      maps.n["R"] = function ()
+        require('vscode').action "yazi-vscode.toggle"
+      end
 
       -- fold
       maps.n["zz"] = function() require("vscode").action "editor.toggleFold" end
@@ -125,7 +130,7 @@ return {
 
       -- LSP Mappings
       maps.n["K"] = function() require("vscode").action "editor.action.showHover" end
-      maps.n["gI"] = function() require("vscode").action "editor.action.goToImplementation" end
+      maps.n["gi"] = function() require("vscode").action "editor.action.goToImplementation" end
       maps.n["gd"] = function() require("vscode").action "editor.action.revealDefinition" end
       maps.n["gD"] = function() require("vscode").action "editor.action.revealDeclaration" end
       maps.n["gr"] = function() require("vscode").action "editor.action.goToReferences" end
@@ -136,6 +141,7 @@ return {
       maps.n["<Leader>lr"] = function() require("vscode").action "editor.action.rename" end
       maps.n["<Leader>ls"] = function() require("vscode").action "workbench.action.gotoSymbol" end
       maps.n["<Leader>lf"] = function() require("vscode").action "editor.action.formatDocument" end
+      maps.n["<Leader>lo"] = function () require("vscode").action "outline.focus" end
 
       -- harpoon for vscode
       maps.n["<Leader>ha"] = function() require("vscode").action "vscode-harpoon.addEditor" end
