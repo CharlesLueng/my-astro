@@ -53,11 +53,9 @@ return {
       if opt then opt.cmdheight = nil end
 
       local maps = assert(opts.mappings)
-      
+
       -- yazi
-      maps.n["R"] = function ()
-        require('vscode').action "yazi-vscode.toggle"
-      end
+      maps.n["R"] = function() require("vscode").action "yazi-vscode.toggle" end
 
       -- fold
       maps.n["zz"] = function() require("vscode").action "editor.toggleFold" end
@@ -86,8 +84,18 @@ return {
       maps.n["]b"] = "<Cmd>Tabnext<CR>"
       maps.n["[b"] = "<Cmd>Tabprevious<CR>"
       maps.n["<Leader>c"] = "<Cmd>Tabclose<CR>"
-      maps.n["<Leader>C"] = "<Cmd>Tabclose!<CR>"
+      maps.n["<Leader>C"] = function ()
+        require("vscode").action "workbench.action.closeSidebar"
+        require("vscode").action "workbench.action.closeAuxiliaryBar"
+        require("vscode").action "workbench.action.closePanel"
+      end
       maps.n["<Leader>bp"] = "<Cmd>Tablast<CR>"
+      maps.n["<leader>bc"] = function ()
+        require("vscode").action "workbench.action.closeOtherEditors"
+      end
+      maps.n["<leader>bC"] = function ()
+        require("vscode").action "workbench.action.closeEditorsInGroup"
+      end
 
       -- file explorer
       maps.n["<Leader>e"] = function() require("vscode").action "workbench.files.action.focusFilesExplorer" end
@@ -112,18 +120,21 @@ return {
       maps.n["<Leader>ft"] = function() require("vscode").action "workbench.action.selectTheme" end
       maps.n["<Leader>fw"] = function() require("vscode").action "workbench.action.findInFiles" end
       maps.n["<Leader>fp"] = function() require("vscode").action "projectManager.listProjects" end
-      maps.n["<leader>fb"] = function()
-        require("vscode").action("workbench.action.quickOpen", {
-          args = {
-            "edt ",
-          },
-        })
+
+      maps.n["<leader>fb"] = "<Cmd>Tabfind<CR>"
+      -- maps.n["<leader>fb"] = function()
+      --   require("vscode").action("workbench.action.quickOpen", {
+      --     args = {
+      --       "edt ",
+      --     },
+      --   })
+      -- end
+      maps.n["<leader>fT"] = function ()
+        require("vscode").action("todo-tree-view.focus")
       end
 
       -- zen mode
-      maps.n["<leader>zz"] = function ()
-        require("vscode").action("workbench.action.toggleZenMode")
-      end
+      maps.n["<leader>zz"] = function() require("vscode").action "workbench.action.toggleZenMode" end
 
       -- git client
       maps.n["<Leader>gg"] = function() require("vscode").action "workbench.view.scm" end
@@ -141,7 +152,7 @@ return {
       maps.n["<Leader>lr"] = function() require("vscode").action "editor.action.rename" end
       maps.n["<Leader>ls"] = function() require("vscode").action "workbench.action.gotoSymbol" end
       maps.n["<Leader>lf"] = function() require("vscode").action "editor.action.formatDocument" end
-      maps.n["<Leader>lo"] = function () require("vscode").action "outline.focus" end
+      maps.n["<Leader>lo"] = function() require("vscode").action "outline.focus" end
 
       -- harpoon for vscode
       maps.n["<Leader>ha"] = function() require("vscode").action "vscode-harpoon.addEditor" end
@@ -156,6 +167,11 @@ return {
       maps.n["<Leader>h7"] = function() require("vscode").action "vscode-harpoon.gotoEditor7" end
       maps.n["<Leader>h8"] = function() require("vscode").action "vscode-harpoon.gotoEditor8" end
       maps.n["<Leader>h9"] = function() require("vscode").action "vscode-harpoon.gotoEditor9" end
+
+      -- task
+      maps.n["<Leader>rr"] = function() require("vscode").action "workbench.action.tasks.runTask" end
+      maps.n["<Leader>rs"] = function() require("vscode").action "workbench.action.tasks.restartTask" end
+      maps.n["<Leader>rt"] = function() require("vscode").action "workbench.action.tasks.showTasks" end
     end,
   },
   -- disable treesitter highlighting
