@@ -212,7 +212,7 @@ return {
             :with_del(cond.not_after_regex "xx")
             -- disable adding a newline when you press <cr>
             :with_cr(cond.none()),
-          Rule("<+", "+>")
+          Rule("<+", "+>"),
         },
         -- disable for .vim files, but it work for another filetypes
         Rule("a", "a", "-vim")
@@ -362,15 +362,28 @@ return {
       end,
     },
   },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    optional = true,
-    enabled = true,
-  },
+  -- {
+  --   "JoosepAlviste/nvim-ts-context-commentstring",
+  --   optional = true,
+  --   enabled = true,
+  -- },
   {
     "numToStr/Comment.nvim",
     optional = true,
     enabled = true,
+    dependencies = {
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        optional = true,
+        enabled = true,
+        opts = {
+          enable_autocmd = false,
+        },
+      },
+    },
+    opts = {
+      pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+    },
   },
   {
     "olimorris/onedarkpro.nvim",
@@ -384,6 +397,116 @@ return {
       },
       highlights = {
         LineNr = { fg = "${line_num_color}" }, -- Make command line text darker
+      },
+    },
+  },
+
+  {
+    "catppuccin/nvim",
+    optional = true,
+    opts = {
+      flavour = "auto", -- latte, frappe, macchiato, mocha
+      background = { -- :h background
+        light = "latte",
+        dark = "mocha",
+      },
+      transparent_background = true, -- disables setting the background color.
+      float = {
+        transparent = false, -- enable transparent floating windows
+        solid = false, -- use solid styling for floating windows, see |winborder|
+      },
+      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+      dim_inactive = {
+        enabled = false, -- dims the background color of inactive window
+        shade = "dark",
+        percentage = 0.15, -- percentage of the shade to apply to the inactive window
+      },
+      no_italic = false, -- Force no italic
+      no_bold = false, -- Force no bold
+      no_underline = false, -- Force no underline
+      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+        comments = { "italic" }, -- Change the style of comments
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+        -- miscs = {}, -- Uncomment to turn off hard-coded styles
+      },
+      color_overrides = {
+        line_num_color = "#7f848e",
+        -- mocha
+        -- rosewater = "#f5e0dc",
+        -- flamingo = "#f2cdcd",
+        -- pink = "#f5c2e7",
+        -- mauve = "#cba6f7",
+        -- red = "#f38ba8",
+        -- maroon = "#eba0ac",
+        -- peach = "#fab387",
+        -- yellow = "#f9e2af",
+        -- green = "#a6e3a1",
+        -- teal = "#94e2d5",
+        -- sky = "#89dceb",
+        -- sapphire = "#74c7ec",
+        -- blue = "#89b4fa",
+        -- lavender = "#b4befe",
+        -- text = "#cdd6f4",
+        -- subtext1 = "#bac2de",
+        -- subtext0 = "#a6adc8",
+        -- overlay2 = "#9399b2",
+        -- overlay1 = "#7f849c",
+        -- overlay0 = "#6c7086",
+        -- surface2 = "#585b70",
+        -- surface1 = "#45475a",
+        -- surface0 = "#313244",
+        -- base = "#1e1e2e",
+        -- mantle = "#181825",
+        -- crust = "#11111b",
+      },
+      custom_highlights = {
+        -- all = function(color)
+        --   return {
+        --     -- LineNr = { fg = color.line_num_color }, -- Make command line text darker
+        --   }
+        -- end,
+      },
+      highlight_overrides = {
+        all = function(colors)
+          return {
+            LineNr = { fg = colors.text }, -- Make command line text darker
+          }
+        end,
+        mocha = function(mocha)
+          return {
+            LineNr = { fg = mocha.subtext1 }, -- Make command line text darker
+          }
+        end,
+      },
+      default_integrations = true,
+      auto_integrations = false,
+      integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        notify = true,
+        mini = {
+          enabled = true,
+          indentscope_color = "",
+        },
+        flash = true,
+        overseer = true,
+        snack = {
+          enabled = true,
+        },
+        which_key = true,
+        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
       },
     },
   },

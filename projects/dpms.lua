@@ -1,0 +1,70 @@
+vim.g.list_of_lsp_server = {"vuels", "emmet_ls", "html", "cssls", "vtsls", "roslyn", "csharpier"}
+
+-- require("overseer").register_template({
+--   name = "run MS.Api",
+--   params = {},
+--   condition = {
+--     -- This makes the template only available in the current directory
+--     -- In case you :cd out later
+--     dir = vim.fn.getcwd(),
+--   },
+--   builder = function()
+--     return {
+--       cmd = {"dotnet"},
+--       cwd = "./Code",
+--       args = {"run", "--project", "MS.Api"},
+--     }
+--   end,
+-- })
+--
+--
+-- require("overseer").register_template({
+--   name = "run MS.File.Api",
+--   params = {},
+--   condition = {
+--     -- This makes the template only available in the current directory
+--     -- In case you :cd out later
+--     dir = vim.fn.getcwd(),
+--   },
+--   builder = function()
+--     return {
+--       cmd = {"dotnet"},
+--       cwd = "./Code",
+--       args = {"run", "--project", "MS.File.Api"},
+--     }
+--   end,
+-- })
+--
+-- require("overseer").register_template({
+--   name = "run MS.Business.Api",
+--   params = {},
+--   condition = {
+--     -- This makes the template only available in the current directory
+--     -- In case you :cd out later
+--     dir = vim.fn.getcwd(),
+--   },
+--   builder = function()
+--     return {
+--       cmd = {"dotnet"},
+--       cwd = "./Code",
+--       args = {"run", "--project", "MS.Business.Api"},
+--     }
+--   end,
+-- })
+--
+-- require("overseer").register_template({
+--   name = "run UI:Dev",
+--   params = {},
+--   condition = {
+--     -- This makes the template only available in the current directory
+--     -- In case you :cd out later
+--     dir = vim.fn.getcwd(),
+--   },
+--   builder = function()
+--     return {
+--       cwd = "./UI/Portal.UI",
+--       cmd = {"yarn"},
+--       args = {"dev"},
+--     }
+--   end,
+-- })

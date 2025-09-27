@@ -39,5 +39,6 @@ return {
   -- import/override with your plugins folder
   -- Lsp Picker Mappings
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
-  -- { import = "comment/ts-comments-nvim"}
+  -- { import = "astrocommunity.comment.mini-comment"},
+  -- { import = "astrocommunity.comment.ts-comments-nvim"}
 }

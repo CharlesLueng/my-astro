@@ -10,28 +10,28 @@ vim.tbl_map(function(plugin) enabled[plugin] = true end, {
   "AstroNvim",
   "astrocore",
   "astroui",
-  "Comment.nvim",
+  -- "Comment.nvim",
   "nvim-autopairs",
   "nvim-treesitter",
   "nvim-ts-autotag",
   "nvim-treesitter-textobjects",
-  "nvim-ts-context-commentstring",
+  -- "nvim-ts-context-commentstring",
   -- more known working
-  "dial.nvim",
+  -- "dial.nvim",
   "flash.nvim",
-  "flit.nvim",
-  "leap.nvim",
-  "mini.ai",
-  "mini.comment",
-  "mini.move",
-  "mini.pairs",
+  -- "flit.nvim",
+  -- "leap.nvim",
+  -- "mini.ai",
+  -- "mini.comment",
+  -- "mini.move",
+  -- "mini.pairs",
   "mini.surround",
   "nvim-surround",
-  "ts-comments.nvim",
-  "vim-easy-align",
-  "vim-repeat",
-  "vim-sandwich",
-  "yanky.nvim",
+  -- "ts-comments.nvim",
+  -- "vim-easy-align",
+  -- "vim-repeat",
+  -- "vim-sandwich",
+  -- "yanky.nvim",
   -- feel free to open PRs to add more support!
 })
 
@@ -84,7 +84,7 @@ return {
       maps.n["]b"] = "<Cmd>Tabnext<CR>"
       maps.n["[b"] = "<Cmd>Tabprevious<CR>"
       maps.n["<Leader>c"] = "<Cmd>Tabclose<CR>"
-      maps.n["<Leader>C"] = function ()
+      maps.n["<Leader>x"] = function ()
         require("vscode").action "workbench.action.closeSidebar"
         require("vscode").action "workbench.action.closeAuxiliaryBar"
         require("vscode").action "workbench.action.closePanel"
@@ -95,6 +95,9 @@ return {
       end
       maps.n["<leader>bC"] = function ()
         require("vscode").action "workbench.action.closeEditorsInGroup"
+      end
+      maps.n["<leader>bn"] = function ()
+        require("vscode").action "notifications.clearAll"
       end
 
       -- file explorer
@@ -174,6 +177,8 @@ return {
       maps.n["<Leader>rt"] = function() require("vscode").action "workbench.action.tasks.showTasks" end
     end,
   },
+  -- disable colorscheme setting
+  { "AstroNvim/astroui", opts = { colorscheme = false } },
   -- disable treesitter highlighting
   { "nvim-treesitter/nvim-treesitter", opts = { highlight = { enable = false } } },
 }

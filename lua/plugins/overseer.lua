@@ -22,14 +22,14 @@ return {
   ---@param opts overseer.Config
   opts = function(_, opts)
     local astrocore = require "astrocore"
-    if astrocore.is_available "toggleterm.nvim" then opts.strategy = "toggleterm" end
+    -- if astrocore.is_available "toggleterm.nvim" then opts.strategy = "toggleterm" end
     opts.task_list = {
       bindings = {
         ["<C-l>"] = false,
         ["<C-h>"] = false,
         ["<C-k>"] = false,
         ["<C-j>"] = false,
-        q = "<Cmd>close<CR>",
+        ["q"] = "Close",
         K = "IncreaseDetail",
         J = "DecreaseDetail",
         ["<C-p>"] = "ScrollOutputUp",
@@ -40,16 +40,16 @@ return {
     opts.component_aliases = {
       -- Most tasks are initialized with the default components
       default = {
-        -- { "display_duration", detail_level = 2 },
-        -- "on_output_summarize",
+        { "display_duration", detail_level = 2 },
+        "on_output_summarize",
         "on_exit_set_status",
         "on_complete_notify",
-        -- { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
+        { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
       },
       -- Tasks from tasks.json use these components
       default_vscode = {
         "default",
-        -- "on_result_diagnostics",
+        "on_result_diagnostics",
       },
     }
   end,

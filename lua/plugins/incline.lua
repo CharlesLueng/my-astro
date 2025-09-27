@@ -25,7 +25,7 @@ return {
         if signs == nil then return labels end
         for name, icon in pairs(icons) do
           if tonumber(signs[name]) and signs[name] > 0 then
-            table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
+            table.insert(labels, { icon .. " " .. signs[name] .. " ", group = "Diff" .. name })
           end
         end
         if #labels > 0 then table.insert(labels, { "┊ " }) end
@@ -38,7 +38,7 @@ return {
 
         for severity, icon in pairs(icons) do
           local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
-          if n > 0 then table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity }) end
+          if n > 0 then table.insert(label, { icon.." " .. n .. " ", group = "DiagnosticSign" .. severity }) end
         end
         if #label > 0 then table.insert(label, { "┊ " }) end
         return label
