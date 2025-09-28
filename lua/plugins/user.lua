@@ -330,6 +330,7 @@ return {
   },
   {
     "folke/tokyonight.nvim",
+    enabled = false,
     opts = {
       on_colors = function(color)
         -- , comment = "#709db2", dark5 = "#709db2"
@@ -362,6 +363,7 @@ return {
       end,
     },
   },
+  
   -- {
   --   "JoosepAlviste/nvim-ts-context-commentstring",
   --   optional = true,
@@ -387,6 +389,7 @@ return {
   },
   {
     "olimorris/onedarkpro.nvim",
+    enabled = false,
     opts = {
       options = {
         highlight_inactive_windows = true,

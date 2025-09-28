@@ -25,7 +25,7 @@ return {
     {
       "windwp/nvim-projectconfig",
       opts = {
-        autocmd = true,
+        -- autocmd = true,
       },
     },
   },

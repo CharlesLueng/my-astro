@@ -1,6 +1,8 @@
--- return {}
+if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 local prefix = "<Leader>a"
 
+---@type LazySpec
 return {
   {
     "saghen/blink.cmp",
@@ -49,6 +51,8 @@ return {
   },
   {
     "yetone/avante.nvim",
+    enabled = false,
+    cmd = { "AvanteAsk", "AvanteEdit" },
     -- opts = function ()
     --
     -- end
@@ -89,8 +93,8 @@ return {
           endpoint = "https://api.deepseek.com",
           model = "deepseek-coder",
           -- extra_request_body = {
-            -- temperature = 0.75,
-            -- max_tokens = 128 * 1000,
+          -- temperature = 0.75,
+          -- max_tokens = 128 * 1000,
           -- },
         },
         qianwen = {
