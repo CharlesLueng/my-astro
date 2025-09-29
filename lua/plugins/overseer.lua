@@ -22,7 +22,13 @@ return {
   ---@param opts overseer.Config
   opts = function(_, opts)
     local astrocore = require "astrocore"
+    
+    local templates = astrocore.list_insert_unique(vim.tbl_get(opts, "templates"), {"csharp"})
     -- if astrocore.is_available "toggleterm.nvim" then opts.strategy = "toggleterm" end
+
+    opts.templates = templates
+    -- table.insert(opts.templates, { "csharp" })
+
     opts.task_list = {
       bindings = {
         ["<C-l>"] = false,
