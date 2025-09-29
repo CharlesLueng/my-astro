@@ -1,3 +1,62 @@
+-- vim.lsp.enable "roslyn_ls"
+
+-- vim.lsp.config("roslyn_ls", {
+--   cmd = {
+--     "roslyn",
+--     "--logLevel",
+--     "Information",
+--     "--extensionLogDirectory",
+--     "/tmp/roslyn_ls/logs",
+--     "--stdio",
+--   },
+--   on_attach = function(client, bufnr)
+--     print "This will run when the server attaches!"
+--
+--     require("astrolsp").on_attach(client, bufnr)
+--   end,
+--   settings = {
+--     ["csharp|inlay_hints"] = {
+--       csharp_enable_inlay_hints_for_implicit_object_creation = true,
+--       csharp_enable_inlay_hints_for_implicit_variable_types = true,
+--     },
+--     ["csharp|code_lens"] = {
+--       dotnet_enable_references_code_lens = false,
+--     },
+--   },
+-- })
+vim.lsp.config("roslyn", {
+  on_attach = function(client, bufnr)
+    require("astrolsp").on_attach(client, bufnr)
+  end,
+  settings = {
+    ["csharp|background_analysis"] = {
+      dotnet_analyzer_diagnostics_scope = "openFiles",
+      dotnet_compiler_diagnostics_scope = "openFiles"
+    },
+    ["csharp|inlay_hints"] = {
+      csharp_enable_inlay_hints_for_implicit_object_creation = true,
+      csharp_enable_inlay_hints_for_implicit_variable_types = true,
+      csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+      csharp_enable_inlay_hints_for_types = true,
+      dotnet_enable_inlay_hints_for_indexer_parameters = true,
+      dotnet_enable_inlay_hints_for_literal_parameters = true,
+      dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+      dotnet_enable_inlay_hints_for_other_parameters = true,
+      dotnet_enable_inlay_hints_for_parameters = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+    },
+    ["csharp|code_lens"] = {
+      dotnet_enable_references_code_lens = false,
+    },
+    ["csharp|completion"] = {
+      dotnet_show_completion_items_from_unimported_namespaces = true,
+      dotnet_show_name_completion_suggestions = true,
+    },
+  },
+})
+
 return {
   -- CSharp support
   {
@@ -26,21 +85,21 @@ return {
       )
     end,
   },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "roslyn_ls" })
-    end,
-  },
+  -- {
+  --   "williamboman/mason-lspconfig.nvim",
+  --   optional = true,
+  --   opts = function(_, opts)
+  --     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "roslyn" })
+  --   end,
+  -- },
   {
     "seblyng/roslyn.nvim",
     ft = "cs",
     ---@module 'roslyn.config'
     ---@type RoslynNvimConfig
-    opts = {
-      -- your configuration comes here; leave empty for default settings
-    },
+    -- opts = {
+    --   -- your configuration comes here; leave empty for default settings
+    -- },
     config = function(_, opts)
       require("roslyn").setup(opts)
 
@@ -50,6 +109,10 @@ return {
           local bufnr = args.buf
 
           if client and (client.name == "roslyn" or client.name == "roslyn_ls") then
+            -- print(client.name)
+
+            -- require("astrolsp").on_attach(client, bufnr)
+
             vim.api.nvim_create_autocmd("InsertCharPre", {
               desc = "Roslyn: Trigger an auto insert on '/'.",
               buffer = bufnr,
@@ -94,6 +157,7 @@ return {
       })
     end,
   },
+
   -- {
   --   "Decodetalkers/csharpls-extended-lsp.nvim",
   --   dependencies = {
@@ -154,47 +218,74 @@ return {
       },
     },
   },
-  {
-    "AstroNvim/astrolsp",
-    optional = true,
-    opts = function(_, opts)
-      vim.lsp.config("roslyn", {
-        on_attach = function(client, bufnr)
-          -- print "This will run when the server attaches!"
-          require("astrolsp").on_attach(client, bufnr)
-        end,
-        settings = {
-          -- ["csharp|inlay_hints"] = {
-          --   csharp_enable_inlay_hints_for_implicit_object_creation = true,
-          --   csharp_enable_inlay_hints_for_implicit_variable_types = true,
-          -- },
-          -- ["csharp|code_lens"] = {
-          --   dotnet_enable_references_code_lens = true,
-          -- },
-        },
-      })
-      return opts
-    end,
-    -- opts = {
-    --   -- config = {
-    --   --   roslyn_ls = {
-    --   --     on_attach = function(client, bufnr)
-    --   --       -- local wk_avail, wk = pcall(require, "which-key")
-    --   --       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr } --[[@as vim.keymap.set.Opts]])
-    --   --       print "This will run when the server attaches!"
-    --   --       require("astrolsp").on_attach(client, bufnr)
-    --   --     end,
-    --   --     settings = {
-    --   --       ["csharp|inlay_hints"] = {
-    --   --         csharp_enable_inlay_hints_for_implicit_object_creation = true,
-    --   --         csharp_enable_inlay_hints_for_implicit_variable_types = true,
-    --   --       },
-    --   --       ["csharp|code_lens"] = {
-    --   --         dotnet_enable_references_code_lens = true,
-    --   --       },
-    --   --     },
-    --   --   },
-    --   -- },
-    -- },
-  },
+  -- {
+  --   "AstroNvim/astrolsp",
+  --   optional = true,
+  --   -- dependencies = { "seblyng/roslyn.nvim" },
+  --   opts = function(_, opts)
+  --     local astrocore = require "astrocore"
+  --
+  --     -- print(vim.inspect(opts))
+  --
+  --     return astrocore.extend_tbl(opts, {
+  --       config = {
+  --         roslyn_ls = {
+  --           on_attach = function(client, bufnr)
+  --             print "This will run when the server attaches!"
+  --             -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr } --[[@as vim.keymap.set.Opts]])
+  --             require("astrolsp").on_attach(client, bufnr)
+  --           end,
+  --           settings = {
+  --             -- ["csharp|inlay_hints"] = {
+  --             --   csharp_enable_inlay_hints_for_implicit_object_creation = true,
+  --             --   csharp_enable_inlay_hints_for_implicit_variable_types = true,
+  --             -- },
+  --             -- ["csharp|code_lens"] = {
+  --             --   dotnet_enable_references_code_lens = true,
+  --             -- },
+  --           },
+  --         },
+  --       },
+  --     })
+  --
+  --     -- vim.lsp.config("roslyn", {
+  --     --   on_attach = function(client, bufnr)
+  --     --     print "This will run when the server attaches!"
+  --     --     -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr } --[[@as vim.keymap.set.Opts]])
+  --     --     require("astrolsp").on_attach(client, bufnr)
+  --     --   end,
+  --     --   settings = {
+  --     --     -- ["csharp|inlay_hints"] = {
+  --     --     --   csharp_enable_inlay_hints_for_implicit_object_creation = true,
+  --     --     --   csharp_enable_inlay_hints_for_implicit_variable_types = true,
+  --     --     -- },
+  --     --     -- ["csharp|code_lens"] = {
+  --     --     --   dotnet_enable_references_code_lens = true,
+  --     --     -- },
+  --     --   },
+  --     -- })
+  --     -- return opts
+  --   end,
+  --   -- opts = {
+  --   --   -- config = {
+  --   --   --   roslyn_ls = {
+  --   --   --     on_attach = function(client, bufnr)
+  --   --   --       -- local wk_avail, wk = pcall(require, "which-key")
+  --   --   --       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr } --[[@as vim.keymap.set.Opts]])
+  --   --   --       print "This will run when the server attaches!"
+  --   --   --       require("astrolsp").on_attach(client, bufnr)
+  --   --   --     end,
+  --   --   --     settings = {
+  --   --   --       ["csharp|inlay_hints"] = {
+  --   --   --         csharp_enable_inlay_hints_for_implicit_object_creation = true,
+  --   --   --         csharp_enable_inlay_hints_for_implicit_variable_types = true,
+  --   --   --       },
+  --   --   --       ["csharp|code_lens"] = {
+  --   --   --         dotnet_enable_references_code_lens = true,
+  --   --   --       },
+  --   --   --     },
+  --   --   --   },
+  --   --   -- },
+  --   -- },
+  -- },
 }
