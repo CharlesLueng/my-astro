@@ -39,10 +39,7 @@ return {
           -- print(true)
           -- print(vim.fn.fnamemodify(sln_path, ":h"))
 
-          local csproj = vim.fs.find(
-            name,
-            { upward = false, type = "directory", path = vim.fn.getcwd() }
-          )[1]
+          local csproj = vim.fs.find(name, { upward = false, type = "directory", path = vim.fn.getcwd() })[1]
 
           table.insert(templates, {
             name = "Run " .. name,
@@ -50,7 +47,22 @@ return {
             builder = function()
               return {
                 cmd = { "dotnet" },
-                args = { "run", "--project", csproj },
+                args = { "run", "--project", csproj, "--no-self-contained", "--no-restore", "-v q" },
+                cwd = vim.fn.fnamemodify(sln_path, ":h"),
+                components = { "default" },
+              }
+            end,
+            tags = { overseer.TAG.RUN },
+            priority = 50,
+          })
+
+          table.insert(templates, {
+            name = "Watch run " .. name,
+            desc = "dotnet watch run for " .. name,
+            builder = function()
+              return {
+                cmd = { "dotnet" },
+                args = { "watch", "run", "--project", csproj, "--no-self-contained", "--no-restore", "-v q" },
                 cwd = vim.fn.fnamemodify(sln_path, ":h"),
                 components = { "default" },
               }

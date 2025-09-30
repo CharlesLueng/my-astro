@@ -363,7 +363,7 @@ return {
       end,
     },
   },
-  
+
   -- {
   --   "JoosepAlviste/nvim-ts-context-commentstring",
   --   optional = true,
@@ -512,5 +512,38 @@ return {
         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
       },
     },
+  },
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = {
+      "markchristianlacap/csharp-namespace.nvim",
+    },
+    opts = function(_, opts)
+      local astrocore = require "astrocore"
+      local sources_default = astrocore.list_insert_unique(
+        { "csharp_namespace" },
+        vim.tbl_get(opts, "sources", "default") or { "lsp", "path", "luasnip", "buffer" }
+      )
+      return astrocore.extend_tbl(opts, {
+        completion = {
+          menu = {
+            draw = {
+              columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+            },
+          },
+        },
+        sources = {
+          default = sources_default,
+          providers = {
+            csharp_namespace = {
+              module = "blink-csharp-namespace",
+              name = "C# Namespace",
+              opts = {},
+            },
+          },
+        },
+      })
+    end,
   },
 }
