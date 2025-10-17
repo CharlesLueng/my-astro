@@ -10,7 +10,7 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.pack.cs" },
+  -- { import = "astrocommunity.pack.cs" },
   -- { import = "astrocommunity.pack.cs-omnisharp" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.json" },
@@ -42,4 +42,6 @@ return {
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   -- { import = "astrocommunity.comment.mini-comment"},
   -- { import = "astrocommunity.comment.ts-comments-nvim"}
+  -- prokect
+  { import = "astrocommunity.project.projectmgr-nvim" }
 }

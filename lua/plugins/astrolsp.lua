@@ -5,6 +5,7 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -44,6 +45,63 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      roslyn = {
+        settings = {
+          ["csharp|background_analysis"] = {
+            dotnet_analyzer_diagnostics_scope = "openFiles",
+            dotnet_compiler_diagnostics_scope = "openFiles",
+          },
+          ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = false,
+            csharp_enable_inlay_hints_for_implicit_variable_types = false,
+            csharp_enable_inlay_hints_for_lambda_parameter_types = false,
+            csharp_enable_inlay_hints_for_types = false,
+            dotnet_enable_inlay_hints_for_indexer_parameters = false,
+            dotnet_enable_inlay_hints_for_literal_parameters = false,
+            dotnet_enable_inlay_hints_for_object_creation_parameters = false,
+            dotnet_enable_inlay_hints_for_other_parameters = false,
+            dotnet_enable_inlay_hints_for_parameters = false,
+            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = false,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = false,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = false,
+          },
+          ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = false,
+          },
+          ["csharp|completion"] = {
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+          },
+        },
+      },
+      -- omnisharp = {
+      --   cmd = {
+      --     "omnisharp",
+      --     "-z",
+      --     "--hostPID",
+      --     tostring(vim.fn.getpid()),
+      --     "DotNet:enablePackageRestore=false",
+      --     "--encoding",
+      --     "utf-8",
+      --     "--languageserver",
+      --     "Sdk:IncludePrereleases=true",
+      --     "FormattingOptions:EnableEditorConfigSupport=true",
+      --   },
+      --   -- cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+      --   -- root_dir = lspconfig.util.root_pattern("*.csproj", "*.sln"),
+      --   settings = {
+      --     omnisharp = {
+      --       FormattingOptions = {
+      --         EnableEditorConfigSupport = true,
+      --       },
+      --       Sdk = {
+      --         IncludePrereleases = true,
+      --       },
+      --     },
+      --   },
+      --   -- on_attach = on_attach,
+      --   -- capabilities = capabilities,
+      -- },
       -- angularls = {
       --   -- cmd = {
       --   --   "ngserver",
@@ -203,28 +261,29 @@ return {
       },
     },
     -- mappings to be set up on attaching of a language server
-    mappings = {
-      n = {
-        -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
-        gD = {
-          function() vim.lsp.buf.declaration() end,
-          desc = "Declaration of current symbol",
-          cond = "textDocument/declaration",
-        },
-        -- gd = {
-        --   function() vim.lsp.buf.definition() end,
-        --   desc = "Go to definition",
-        --   -- cond = "bufnr"
-        -- },
-        ["<Leader>uY"] = {
-          function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-          desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
-          end,
-        },
-      },
-    },
+    -- mappings = {
+    --   n = {
+    --     -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
+    --     gD = {
+    --       function() vim.lsp.buf.declaration() end,
+    --       desc = "Declaration of current symbol",
+    --       cond = "textDocument/declaration",
+    --     },
+    --     -- gd = {
+    --     --   function() vim.lsp.buf.definition() end,
+    --     --   desc = "Go to definition",
+    --     --   -- cond = "bufnr"
+    --     -- },
+    --     ["<Leader>uY"] = {
+    --       function() require("astrolsp.toggles").buffer_semantic_tokens() end,
+    --       desc = "Toggle LSP semantic highlight (buffer)",
+    --       cond = function(client)
+    --         return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+    --       end,
+    --     },
+    --   },
+    -- },
+    
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
     -- on_attach = function(client, bufnr)
